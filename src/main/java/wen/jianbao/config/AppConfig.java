@@ -8,6 +8,7 @@ import com.jfinal.kit.PropKit;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 import com.jfinal.plugin.druid.DruidPlugin;
 import com.jfinal.template.Engine;
+import wen.jianbao.model.base._MappingKit;
 
 public class AppConfig extends JFinalConfig {
     @Override
@@ -56,6 +57,7 @@ public class AppConfig extends JFinalConfig {
         // 配置ActiveRecord插件
         ActiveRecordPlugin arp = new ActiveRecordPlugin(druidPlugin);
         arp.setShowSql(true);
+        _MappingKit.mapping(arp);
         me.add(arp);
     }
 
