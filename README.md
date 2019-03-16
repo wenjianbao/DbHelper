@@ -25,8 +25,8 @@
 - [链式方法](#jump_chain)
 - [查询构造器缓存](#jump_cache)
 - [重置查询构造器](#jump_reset)
-- [对JFinal DB API 简单封装](#jump_jfinal)
-- [对JFinal Model API 简单封装](#jump_jfinal_model)
+- [对 JFinal DB API 简单封装](#jump_jfinal)
+- [对 JFinal Model API 简单封装](#jump_jfinal_model)
 
 ###<span id="jump_select">查询</span>
 
@@ -1149,7 +1149,7 @@ List<Record> list = dbHelper.findAll();
 
 > 如果你正在使用查询构造器缓存功能，连续两次调用 getCompiledSelect() 方法 并且不重置你的查询，这将会导致缓存被合并两次。举例来说，例如你正在缓存 select() 方法，那么会查询两个相同的字段。
 
-###<span id="jump_jfinal">对JFinal DB API 简单封装</span>
+###<span id="jump_jfinal">对 JFinal DB API 简单封装</span>
 
 DbHelper.java : 继承了SqlHelper类，拥有构造SQL字符串的能力，同时简单封装了JFinal框架执行SQL语句的API，让自己又有执行SQL语句的能力。
 
@@ -1218,7 +1218,7 @@ Page<Record> page = DbHelper.create()
         .findPage(2, 10);
 ```
 
-###<span id="jump_jfinal_model">对JFinal Model API 简单封装</span>
+###<span id="jump_jfinal_model">对 JFinal Model API 简单封装</span>
 
 
 ModelHelper.java : 继承了SqlHelper类，拥有构造SQL字符串的能力，同时传入 模型实例，让自己又有执行SQL语句的能力。
