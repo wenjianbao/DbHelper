@@ -405,7 +405,7 @@ public class SqlHelper<T extends SqlHelper> {
      */
     protected T _wh(String sh_key, String key, Object value, String type, boolean... escape) {
         if (StringUtils.isBlank(key)) {
-            throw new IllegalArgumentException("key is empty");
+            return (T) this;
         }
 
         List<Where> _sh_key       = sh_key.equals("sh_having") ? shHaving : shWhere;
