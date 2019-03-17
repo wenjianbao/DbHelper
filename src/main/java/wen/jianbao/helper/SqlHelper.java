@@ -568,19 +568,19 @@ public class SqlHelper<T extends SqlHelper> {
      * @param escape 是否转义
      * @return SqlHelper
      */
-    public T like(String field, String match, String side, boolean... escape) {
+    public T like(String field, Object match, String side, boolean... escape) {
         return _like(field, match, "AND ", side, "", escape);
     }
 
-    public T like(String field, String match, boolean... escape) {
+    public T like(String field, Object match, boolean... escape) {
         return _like(field, match, "AND ", "both", "", escape);
     }
 
-    public T like(Map<String, String> fields, String side, boolean... escape) {
+    public T like(Map<String, Object> fields, String side, boolean... escape) {
         return _like(fields, "AND ", side, "", escape);
     }
 
-    public T like(Map<String, String> fields, boolean... escape) {
+    public T like(Map<String, Object> fields, boolean... escape) {
         return _like(fields, "AND ", "both", "", escape);
     }
 
@@ -596,19 +596,19 @@ public class SqlHelper<T extends SqlHelper> {
      * @param escape 是否转义
      * @return SqlHelper
      */
-    public T notLike(String field, String match, String side, boolean... escape) {
+    public T notLike(String field, Object match, String side, boolean... escape) {
         return _like(field, match, "AND ", side, "NOT", escape);
     }
 
-    public T notLike(String field, String match, boolean... escape) {
+    public T notLike(String field, Object match, boolean... escape) {
         return _like(field, match, "AND ", "both", "NOT", escape);
     }
 
-    public T notLike(Map<String, String> fields, String side, boolean... escape) {
+    public T notLike(Map<String, Object> fields, String side, boolean... escape) {
         return _like(fields, "AND ", side, "NOT", escape);
     }
 
-    public T notLike(Map<String, String> fields, boolean... escape) {
+    public T notLike(Map<String, Object> fields, boolean... escape) {
         return _like(fields, "AND ", "both", "NOT", escape);
     }
 
@@ -624,19 +624,19 @@ public class SqlHelper<T extends SqlHelper> {
      * @param escape 是否转义
      * @return SqlHelper
      */
-    public T orLike(String field, String match, String side, boolean... escape) {
+    public T orLike(String field, Object match, String side, boolean... escape) {
         return _like(field, match, "OR ", side, "", escape);
     }
 
-    public T orLike(String field, String match, boolean... escape) {
+    public T orLike(String field, Object match, boolean... escape) {
         return _like(field, match, "OR ", "both", "", escape);
     }
 
-    public T orLike(Map<String, String> fields, String side, boolean... escape) {
+    public T orLike(Map<String, Object> fields, String side, boolean... escape) {
         return _like(fields, "OR ", side, "", escape);
     }
 
-    public T orLike(Map<String, String> fields, boolean... escape) {
+    public T orLike(Map<String, Object> fields, boolean... escape) {
         return _like(fields, "OR ", "both", "", escape);
     }
 
@@ -652,19 +652,19 @@ public class SqlHelper<T extends SqlHelper> {
      * @param escape 是否转义
      * @return SqlHelper
      */
-    public T orNotLike(String field, String match, String side, boolean... escape) {
+    public T orNotLike(String field, Object match, String side, boolean... escape) {
         return _like(field, match, "OR ", side, "NOT", escape);
     }
 
-    public T orNotLike(String field, String match, boolean... escape) {
+    public T orNotLike(String field, Object match, boolean... escape) {
         return _like(field, match, "OR ", "both", "NOT", escape);
     }
 
-    public T orNotLike(Map<String, String> fields, String side, boolean... escape) {
+    public T orNotLike(Map<String, Object> fields, String side, boolean... escape) {
         return _like(fields, "OR ", side, "NOT", escape);
     }
 
-    public T orNotLike(Map<String, String> fields, boolean... escape) {
+    public T orNotLike(Map<String, Object> fields, boolean... escape) {
         return _like(fields, "OR ", "both", "NOT", escape);
     }
 
@@ -685,8 +685,10 @@ public class SqlHelper<T extends SqlHelper> {
      * @param escape 是否转义
      * @return SqlHelper
      */
-    protected T _like(String field, String match, String type, String side, String not, boolean... escape) {
+    protected T _like(String field, Object match, String type, String side, String not, boolean... escape) {
+        String  _match  = match.toString();
         boolean _escape = escape.length > 0 ? escape[0] : _protectIdentifiers;
+
         // 统一把 side 转为小写，防止有人书写格式不一样，如：用 'before' 替换 'BEFORE'
         side = side.toLowerCase();
 
@@ -695,22 +697,22 @@ public class SqlHelper<T extends SqlHelper> {
                 : _groupGetType(type);
 
         if (_escape) {
-            match = escapeLikeStr(match);
+            match = escapeLikeStr(_match);
         }
 
         String like = "";
         switch (side) {
             case "none":
-                like = prefix + " " + field + " " + not + " LIKE '" + match + "'";
+                like = prefix + " " + field + " " + not + " LIKE '" + _match + "'";
                 break;
             case "before":
-                like = prefix + " " + field + " " + not + " LIKE '%" + match + "'";
+                like = prefix + " " + field + " " + not + " LIKE '%" + _match + "'";
                 break;
             case "after":
-                like = prefix + " " + field + " " + not + " LIKE '" + match + "%'";
+                like = prefix + " " + field + " " + not + " LIKE '" + _match + "%'";
                 break;
             default:
-                like = prefix + " " + field + " " + not + " LIKE '%" + match + "%'";
+                like = prefix + " " + field + " " + not + " LIKE '%" + _match + "%'";
                 break;
         }
 
@@ -727,12 +729,12 @@ public class SqlHelper<T extends SqlHelper> {
         return (T) this;
     }
 
-    protected T _like(Map<String, String> fields, String type, String side, String not, boolean... escape) {
+    protected T _like(Map<String, Object> fields, String type, String side, String not, boolean... escape) {
         if (fields == null) {
             return (T) this;
         }
 
-        for (Map.Entry<String, String> entry : fields.entrySet()) {
+        for (Map.Entry<String, Object> entry : fields.entrySet()) {
             _like(entry.getKey(), entry.getValue(), type, side, not, escape);
         }
 
@@ -1020,7 +1022,7 @@ public class SqlHelper<T extends SqlHelper> {
         if (!direction.equals("RANDOM")) {
             return _getErrorReturn("db_direction_must_be_RANDOM", (T) this);
         }
-        
+
         return orderBy(String.valueOf(seed), direction, escape);
     }
 
