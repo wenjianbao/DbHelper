@@ -10,7 +10,9 @@
 
 (1) SqlHelper.java : 专门用来拼接SQL字符串的，最终输出完整的SQL语句；
 
-(2) DbHelper.java : 继承了SqlHelper类，简单封装了JFinal框架执行SQL语句的API，让自己有执行SQL语句的能力；  
+(2) DbHelper.java : 继承了SqlHelper类，简单封装了JFinal框架执行SQL语句的API，让自己有执行SQL语句的能力；
+
+(3) ModelHelper.java：继承了SqlHelper类，简单封装了 Model 实例，让自己有 Model API 功能；
 
 ## 语法如下
 - [查询](#jump_select)
@@ -1293,3 +1295,4 @@ Page<Blog> page = new ModelHelper<>(Blog.dao)
         .where("blogId >", 2)
         .findPage(1, 20);
 ```
+
