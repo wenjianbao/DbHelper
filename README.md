@@ -192,7 +192,7 @@ List<Record> list = DbHelper.create()
 
 2. **自定义 key/value 方式**：
 
-为了控制比较，你可以在第一个参数中包含一个比较运算符：
+为了控制比较，你可以在第一个参数中包含一个比较运算符：=，!=，>，>=，<，<=
 ```
 List<Record> list = DbHelper.create()
         .where("name !=", "温建宝")
